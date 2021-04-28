@@ -32,32 +32,32 @@
 
 // OTYPER - Output type register
 // On bit for each pin, 0=push-pull, 1=open drain
-#define GPIO_D_OTYPER   ((volatile unsigned short *) GPIO_D + 0x04)
+#define GPIO_D_OTYPER   ((volatile unsigned short *) (GPIO_D + 0x04))
 
 // OSPEEDR - Output Speed Register
 // Controls update freq. for each pin. 00=lowest 11=highest, and so on
-#define GPIO_D_OSPEEDR  ((volatile unsigned short *) GPIO_D + 0x08)
+#define GPIO_D_OSPEEDR  ((volatile unsigned short *) (GPIO_D + 0x08))
 
 // PUPDR - Pull-Up / Pull-Down Register
 // 00=floating, 01=pull-up, 10=pull-down  
-#define GPIO_D_PUPDR    ((volatile unsigned short *) GPIO_D + 0x0c)
+#define GPIO_D_PUPDR    ((volatile unsigned short *) (GPIO_D + 0x0c))
 
 // IDR - Input data register
-#define GPIO_D_IDR        ((volatile unsigned short *) GPIO_D + 0x10)
+#define GPIO_D_IDR        ((volatile unsigned short *) (GPIO_D + 0x10))
 
 // ODR - Output data register
-#define GPIO_D_ODR        ((volatile unsigned short *) GPIO_D + 0x14)
+#define GPIO_D_ODR        ((volatile unsigned short *) (GPIO_D + 0x14))
 
 // You can of course define smaller sections too if you want:
-#define IDR_D_LOW         ((volatile unsigned char *) GPIO_D + 0x10)
-#define IDR_D_HIGH        ((volatile unsigned char *) GPIO_D + 0x11)
-#define ODR_D_LOW         ((volatile unsigned char *) GPIO_D + 0x14)
-#define ODR_D_HIGH        ((volatile unsigned char *) GPIO_D + 0x15)
+#define IDR_D_LOW         ((volatile unsigned char *) (GPIO_D + 0x10))
+#define IDR_D_HIGH        ((volatile unsigned char *) (GPIO_D + 0x11))
+#define ODR_D_LOW         ((volatile unsigned char *) (GPIO_D + 0x14))
+#define ODR_D_HIGH        ((volatile unsigned char *) (GPIO_D + 0x15))
 
-#define GPIO_D_BSRR       ((volatile unsigned int *) GPIO_D + 0x18)
-#define GPIO_D_LCKR       ((volatile unsigned short *) GPIO_D + 0x1c)
-#define GPIO_D_AFRL       ((volatile unsigned int *) GPIO_D + 0x20)
-#define GPIO_D_AFRH       ((volatile unsigned int *) GPIO_D + 0x20)
+#define GPIO_D_BSRR       ((volatile unsigned int *) (GPIO_D + 0x18))
+#define GPIO_D_LCKR       ((volatile unsigned short *) (GPIO_D + 0x1c))
+#define GPIO_D_AFRL       ((volatile unsigned int *) (GPIO_D + 0x20))
+#define GPIO_D_AFRH       ((volatile unsigned int *) (GPIO_D + 0x20))
 
 // the same offsets goes for the other registers but using another base address
 // instead of GPIO_D.
@@ -83,9 +83,9 @@
 
 // ==== SysTick (System timer) =====
 #define STK_CTRL    ((volatile unsigned int *) 0xE000E010)
-#define STK_LOAD    ((volatile unsigned int *) STK_CTRL + 0x4)
-#define STK_VAL     ((volatile unsigned int *) STK_CTRL + 0x8)
-#define STK_CALIB   ((volatile unsigned int *) STK_CTRL + 0xc)
+#define STK_LOAD    ((volatile unsigned int *) (STK_CTRL + 0x4))
+#define STK_VAL     ((volatile unsigned int *) (STK_CTRL + 0x8))
+#define STK_CALIB   ((volatile unsigned int *) (STK_CTRL + 0xc))
 
 // example usage of systick, taken directly from the lecture slides
 void delay_250ns(void) {
