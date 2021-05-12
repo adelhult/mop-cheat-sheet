@@ -184,3 +184,43 @@ void graphic_pixel_clear(int x, int y){
     __asm volatile(" .HWORD 0xDFF3\n");
     __asm volatile(" BX LR\n");
 }
+
+// ==== Vector reallocation =====
+#define SCB_VTOR        (*((volatile unsigned long *) 0xE000ED08))
+#define REALLOC         0x2001C000
+
+// ==== TIM 6 ====
+
+#define TIM6_IRQVEC (*((void (**)(void)) (REALLOC + 0x118)))
+
+#define CEN (1)
+#define UDIS (1<<1)
+#define URS (1<<2)
+#define OPM (1<<3)
+#define ARPE (1<<7)
+
+#define MMS (0x7<<4)
+
+#define UIE (1)
+#define UDE (1<<8)
+
+#define UIF (1)
+
+volatile struct _timer6 {
+    uint32_t CR1;
+    uint32_t CR2;
+    uint32_t _offset1;
+    uint32_t DIER;
+    uint32_t SR;
+    uint32_t EGR;
+    uint32_t _offset2;
+    uint32_t _offset3;
+    uint32_t _offset4;
+    uint32_t CNT;
+    uint32_t PSC;
+    uint32_t ARR;
+};
+
+#define TIM6 (*((volatile struct _timer6 *) 0x40001000))
+
+
