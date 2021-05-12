@@ -88,6 +88,46 @@
 #define STK_VAL   ((volatile unsigned int *) (STK+0x08))
 #define STK_CALIB ((volatile unsigned int *) (STK+0x0C))
 
+// To set custom interrupt, set SCB_VTOR to start of table containing irq handlers
+// at different offsets depending on iterrupt type
+#define SCB_VTOR        ((volatile uint32_t *) 0xE000ED08)
+
+// Make a custom start address to interrupt vector in writeable memory
+#define IRQH_BASE      0x2001C000
+#define IRQH_STK       ((void (**)(void)) (RESET_BASE + 0x3C)) //interrupt request handler for systick
+// !! Don't forget to write base addr to SCB_VTOR using *SCB_VTOR = RESET_BASE; !!
+
+
+// example usage of async systick, if(systick_flag) then the timer has finished
+static volatile uint8_t systick_flag;
+static volatile uint32_t delay_count;
+
+void delay_1micro(void) {
+  *STK_CTRL = 0;
+  *STK_LOAD = 167;
+  *STK_VAL = 0;
+  *STK_CTRL = 7;
+}
+
+void systick_irq_handler(void) {
+  *STK_CTRL = 0;
+  if (--delay_count) {
+    delay_1micro();
+  } else {
+    systick_flag = 1;
+  }
+}
+
+//async delay in microseconds
+void delay(uint32_t count) {
+  if (!count) return;
+  delay_count = count;
+  systick_flag = 0;
+  delay_1micro();
+}
+// !! ADD *RESET_STK = &systick_irq_handler; TO INIT !!
+
+
 // example usage of systick, taken directly from the lecture slides
 void delay_250ns(void) {
   /* SystemCoreClock = 168000000 */
