@@ -16,7 +16,7 @@
 */
 
 // ====== GPIO =======
-// D & E are the once used 
+// D & E are the ones used 
 // for peripheral devices 
 #define GPIO_A 0x40020000 
 #define GPIO_B 0x40020400
