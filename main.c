@@ -189,6 +189,25 @@ void graphic_pixel_clear(int x, int y){
 #define SCB_VTOR        (*((volatile unsigned long *) 0xE000ED08))
 #define REALLOC         0x2001C000
 
+
+// ==== EXTI ====
+#define SYSCFG_EXTICR1  ((unsigned int *) 0x40013808)
+
+#define EXTI            0x40013C00
+#define EXTI_IMR        ((unsigned int *) EXTI)
+#define EXTI_RTSR       ((unsigned int *) (EXTI + 0x8))
+#define EXTI_FTSR       ((unsigned int *) (EXTI + 0xC))
+#define EXTI_PR         ((unsigned int *) (EXTI + 0x14))
+
+#define NVIC_ISER0     ((volatile unsigned int *) 0xE000E100)
+
+#define EXTIX_IRQVEC    (REALLOC + 0x58)
+#define EXTI0_IRQVEC    ((void (**)(void) ) (EXTIX_IRQVEC))
+#define EXTI1_IRQVEC    ((void (**)(void) ) (EXTIX_IRQVEC + 4)))
+#define EXTI2_IRQVEC    ((void (**)(void) ) (EXTIX_IRQVEC + 4 * 2))
+#define EXTI3_IRQVEC    ((void (**)(void) ) (EXTIX_IRQVEC + 4 * 3))
+#define EXTI4_IRQVEC    ((void (**)(void) ) (EXTIX_IRQVEC + 4 * 4))
+
 // ==== TIM 6 ====
 
 #define TIM6_IRQVEC (*((void (**)(void)) (REALLOC + 0x118)))
